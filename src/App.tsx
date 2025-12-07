@@ -21,6 +21,7 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 export default function App() {
   return (
@@ -29,7 +30,7 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           {/* Public Routes - Redirect to dashboard if already logged in */}
-          <Route path="/" element={<PublicRoute><SignIn /></PublicRoute>} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signin" element={<PublicRoute><SignIn /></PublicRoute>} />
           <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
           <Route path="/*" element={<PublicRoute><SignIn /></PublicRoute>} />
