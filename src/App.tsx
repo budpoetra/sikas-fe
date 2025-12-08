@@ -21,6 +21,8 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
+import UsersPage from "./pages/Users/UsersPage";
+import TransactionPage from "./pages/Transaction/TransactionPage";
 
 export default function App() {
   return (
@@ -45,7 +47,9 @@ export default function App() {
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/blank" element={<Blank />} />
             <Route path="/form-elements" element={<FormElements />} />
+            <Route path="/transaction" element={<TransactionPage />} />
             <Route path="/basic-tables" element={<BasicTables />} />
+            <Route path="/users" element={<UsersPage />} />
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/avatars" element={<Avatars />} />
             <Route path="/badge" element={<Badges />} />

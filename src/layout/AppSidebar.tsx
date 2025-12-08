@@ -31,7 +31,7 @@ const navItems: NavItem[] = [
   {
     icon: <UserCircleIcon />,
     name: "Users",
-    path: "/basic-tables",
+    path: "/users",
   },
   {
     name: "Products",
@@ -49,7 +49,7 @@ const navItems: NavItem[] = [
   {
     icon: <TableIcon />,
     name: "Transaction",
-    path: "/form-elements",
+    path: "/transaction",
   },
   {
     icon: <PieChartIcon />,

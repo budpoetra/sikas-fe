@@ -15,4 +15,19 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path,
+        configure: (proxy, _options) => {
+          proxy.on('proxyReq', (proxyReq, req, _res) => {
+            console.log('Proxy Request:', req.method, req.url);
+          });
+        }
+      }
+    }
+  }
 });
