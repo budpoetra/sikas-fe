@@ -9,16 +9,6 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Set environment variables for Vite build (Production)
-# ENV VITE_API_URL=http://103.164.191.212:8089/api/v1
-# ENV VITE_ENV=production
-# ENV VITE_VERSION=1.0.0
-
-# Set environment variables for Vite build (Development)
-ENV VITE_API_URL=http://localhost:8080/api/v1
-ENV VITE_ENV=development
-ENV VITE_VERSION=1.0.0
-
 # Build Vite project
 RUN npm run build
 

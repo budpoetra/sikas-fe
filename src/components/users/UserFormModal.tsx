@@ -29,12 +29,12 @@ const ROLE_OPTIONS = [
   { value: '4', label: 'Cashier' },
 ];
 
-export default function UserFormModal({ 
-  isOpen, 
-  onClose, 
-  onSuccess, 
+export default function UserFormModal({
+  isOpen,
+  onClose,
+  onSuccess,
   mode,
-  userData 
+  userData
 }: UserFormModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -96,7 +96,7 @@ export default function UserFormModal({
       ...prev,
       [field]: value,
     }));
-    
+
     // Clear error for this field
     if (errors[field]) {
       setErrors(prev => ({
@@ -163,10 +163,10 @@ export default function UserFormModal({
       if (mode === 'add') {
         // Prepare data for API (excluding confirmPassword)
         // const { confirmPassword, ...apiData } = formData;
-        
+
         // Call create API
         const newUser = await createUser(formData as Partial<User>);
-        
+
         // Show success message
         setSuccessMessage(`User "${newUser.fullName}" has been created successfully!`);
       } else if (mode === 'edit' && userData) {
@@ -178,10 +178,10 @@ export default function UserFormModal({
           // Jika typeId juga bisa diupdate, tambahkan di sini
           // typeId: formData.typeId,
         };
-        
+
         // Call update API
         const updatedUser = await updateUser(userData.id, updateData);
-        
+
         // Show success message
         setSuccessMessage(`User "${updatedUser.fullName}" has been updated successfully!`);
       }
@@ -193,9 +193,16 @@ export default function UserFormModal({
         resetForm();
       }, 1500);
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(`Error ${mode === 'add' ? 'creating' : 'updating'} user:`, err);
-      setError(err.message || `Failed to ${mode === 'add' ? 'create' : 'update'} user. Please try again.`);
+
+      let errorMessage = `Failed to ${mode === 'add' ? 'create' : 'update'} user. Please try again.`;
+
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -205,14 +212,14 @@ export default function UserFormModal({
   if (!isOpen) return null;
 
   const title = mode === 'add' ? 'Add New User' : 'Edit User';
-  const description = mode === 'add' 
-    ? 'Fill in the form below to add a new user to the system' 
+  const description = mode === 'add'
+    ? 'Fill in the form below to add a new user to the system'
     : 'Update the user information below';
 
   return (
     <div className="fixed inset-0 z-[2147483647] overflow-y-auto">
       {/* Overlay */}
-      <div 
+      <div
         className="fixed inset-0 bg-gray-900/70 dark:bg-gray-900/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
@@ -280,7 +287,7 @@ export default function UserFormModal({
                   onChange={(e) => handleInputChange('fullName', e.target.value)}
                   placeholder="Enter full name"
                   disabled={isSubmitting}
-                  error={errors.fullName}
+                  error={errors.fullName ? true : false}
                 />
               </div>
 
@@ -295,7 +302,7 @@ export default function UserFormModal({
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   placeholder="Enter email address"
                   disabled={isSubmitting}
-                  error={errors.email}
+                  error={errors.email ? true : false}
                 />
               </div>
 
@@ -310,7 +317,7 @@ export default function UserFormModal({
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   placeholder="Enter phone number"
                   disabled={isSubmitting}
-                  error={errors.phone}
+                  error={errors.phone ? true : false}
                 />
               </div>
 
@@ -328,7 +335,7 @@ export default function UserFormModal({
                       onChange={(e) => handleInputChange('username', e.target.value)}
                       placeholder="Enter username"
                       disabled={isSubmitting}
-                      error={errors.username}
+                      error={errors.username ? true : false}
                     />
                   </div>
 
@@ -339,9 +346,7 @@ export default function UserFormModal({
                     </label>
                     <Select
                       options={ROLE_OPTIONS}
-                      value={formData.typeId.toString()}
                       onChange={(value) => handleInputChange('typeId', parseInt(value))}
-                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -356,7 +361,7 @@ export default function UserFormModal({
                       onChange={(e) => handleInputChange('password', e.target.value)}
                       placeholder="Enter password"
                       disabled={isSubmitting}
-                      error={errors.password}
+                      error={errors.password ? true : false}
                     />
                   </div>
 
@@ -371,7 +376,7 @@ export default function UserFormModal({
                       onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                       placeholder="Confirm password"
                       disabled={isSubmitting}
-                      error={errors.confirmPassword}
+                      error={errors.confirmPassword ? true : false}
                     />
                   </div>
                 </>
@@ -381,7 +386,6 @@ export default function UserFormModal({
             {/* Form Actions */}
             <div className="mt-8 flex justify-end space-x-3">
               <Button
-                type="button"
                 variant="outline"
                 onClick={onClose}
                 disabled={isSubmitting}
@@ -389,13 +393,11 @@ export default function UserFormModal({
                 Cancel
               </Button>
               <Button
-                type="submit"
                 variant="primary"
-                loading={isSubmitting}
                 disabled={isSubmitting || successMessage.length > 0}
               >
-                {isSubmitting 
-                  ? (mode === 'add' ? 'Creating...' : 'Updating...') 
+                {isSubmitting
+                  ? (mode === 'add' ? 'Creating...' : 'Updating...')
                   : (mode === 'add' ? 'Create User' : 'Update User')}
               </Button>
             </div>

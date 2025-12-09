@@ -22,7 +22,7 @@ export default defineConfig({
         secure: false,
         // rewrite: (path) => path.replace(/^\/api\/v1/, '/api/v1'),
         configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq, req) => {
+          proxy.on('proxyReq', (_, req) => {
             console.log('Proxy Request:', req.method, req.url);
           });
         },

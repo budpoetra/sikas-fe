@@ -1,6 +1,19 @@
 // hooks/useUsers.ts
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { User, PaginatedUsers, FetchUsersParams, fetchUsers } from '../services/userService';
+import { User, FetchUsersParams, fetchUsers } from '../services/userService';
+
+interface UseUsersResult {
+  users: User[];
+  loading: boolean;
+  error: string | null;
+  pagination: {
+    page: number;
+    size: number;
+    totalItems: number;
+    totalPages: number;
+  };
+  refetch: (params?: FetchUsersParams) => Promise<void>;
+}
 
 export const useUsers = (initialParams?: FetchUsersParams): UseUsersResult => {
   const [users, setUsers] = useState<User[]>([]);
@@ -24,17 +37,17 @@ export const useUsers = (initialParams?: FetchUsersParams): UseUsersResult => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Merge params: params baru -> initial params -> defaults
-      const mergedParams = { 
+      const mergedParams = {
         page: 0,
         size: 10,
         ...paramsRef.current,
-        ...params 
+        ...params
       };
-      
+
       const data = await fetchUsers(mergedParams);
-      
+
       setUsers(data.content);
       setPagination({
         page: data.meta.page,
@@ -61,11 +74,11 @@ export const useUsers = (initialParams?: FetchUsersParams): UseUsersResult => {
     fetchData();
   }, []); // ← Hanya jalankan sekali saat mount
 
-  return { 
-    users, 
-    loading, 
-    error, 
-    pagination, 
-    refetch: fetchData 
+  return {
+    users,
+    loading,
+    error,
+    pagination,
+    refetch: fetchData
   };
 };

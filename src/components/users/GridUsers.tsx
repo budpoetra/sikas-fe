@@ -18,16 +18,16 @@ import { PencilIcon } from '../../icons';
 
 
 export default function GridUsers() {
-  
+
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  
+
   const { users, loading, error, pagination, refetch } = useUsers({
     page: currentPage,
     size: 10
   });
-  
+
 
   // Gunakan useCallback untuk mencegah re-render berlebihan
   const handlePageChange = useCallback((page: number) => {
@@ -74,8 +74,8 @@ export default function GridUsers() {
 
   if (error) {
     return (
-      <ErrorMessage 
-        message={error} 
+      <ErrorMessage
+        message={error}
         onRetry={() => refetch({ page: currentPage, size: 10 })}
       />
     );
@@ -149,11 +149,11 @@ export default function GridUsers() {
                       <Badge
                         size="sm"
                         color={
-                          user.typeName === 'admin' 
-                            ? 'purple' 
-                            : user.typeName === 'cashier' 
-                            ? 'blue' 
-                            : 'gray'
+                          user.typeName === 'admin'
+                            ? 'success'
+                            : user.typeName === 'cashier'
+                              ? 'info'
+                              : 'primary'
                         }
                       >
                         {mapTypeNameToRole(user.typeName)}
