@@ -63,6 +63,4 @@ jobs:
               --restart=always \
               ${{ secrets.DOCKER_USERNAME }}/sikas-fe-image:latest
 
-            echo "Cleaning old images..."
-            docker system prune -f
             echo "Deployment completed."
