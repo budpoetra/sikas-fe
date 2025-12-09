@@ -1,4 +1,4 @@
-interface Product {
+export interface Product {
   id: number;
   productName: string;
   productCode: string;
@@ -13,7 +13,7 @@ interface Product {
   updatedBy: number;
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   success: boolean;
   message: string;
   status: number;
@@ -21,10 +21,22 @@ interface ApiResponse {
   timestamp: string;
 }
 
-interface SearchModalProps {
+export interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   products: Product[] | null; // Ubah ini
   onSelectProduct: (product: Product) => void;
   isLoading: boolean;
+}
+
+export interface TransactionItem {
+  id: number;
+  name: string;
+  code: string;
+  barcode: string;
+  price: number;
+  quantity: number;
+  total: number;
+  productId: number;
+  stock: number; // Tambahkan properti stock jika diperlukan
 }

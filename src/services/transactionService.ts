@@ -29,7 +29,7 @@ class TransactionService {
 
   constructor() {
     const baseURL = import.meta.env.VITE_API_URL;
-    
+
     this.api = axios.create({
       baseURL,
       withCredentials: false,

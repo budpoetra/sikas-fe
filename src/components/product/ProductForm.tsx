@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Label from '../form/Label';
 import Input from '../form/input/InputField';
-import Button from '../ui/button/Button';
-import { createProduct, updateProduct, getProducts, Product } from '../../services/productService';
+import { createProduct, updateProduct, getProducts } from '../../services/productService';
 import { getCategories } from '../../services/categoryService';
 import { Category } from '../../services/categoryService';
-import ProductList from '../../pages/product/ProductList';
 
 interface ProductFormData {
   productName: string;
@@ -14,7 +12,7 @@ interface ProductFormData {
   price: number;
   stock: number;
   barcode: string;
-  productCode: string; 
+  productCode: string;
 }
 
 export default function ProductForm() {
@@ -41,15 +39,15 @@ export default function ProductForm() {
     }
   }, [id, isEdit]);
 
-const fetchCategories = async () => {
-  try {
-    const data = await getCategories();
-    const sortedCategories = [...data].sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
-    setCategories(sortedCategories);
-  } catch (err) {
-    console.error('Error fetching categories:', err);
-  }
-};
+  const fetchCategories = async () => {
+    try {
+      const data = await getCategories();
+      const sortedCategories = [...data].sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
+      setCategories(sortedCategories);
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+    }
+  };
 
 
   const fetchProduct = async (productId: number) => {
@@ -83,14 +81,14 @@ const fetchCategories = async () => {
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  const { name, value } = e.target;
-  setFormData(prev => ({
-    ...prev,
-    [name]: ['price', 'stock', 'categoryId'].includes(name)
-      ? (value === '' ? 0 : parseInt(value)) // gunakan parseInt agar integer
-      : value
-  }));
-};
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: ['price', 'stock', 'categoryId'].includes(name)
+        ? (value === '' ? 0 : parseInt(value)) // gunakan parseInt agar integer
+        : value
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -203,48 +201,20 @@ const fetchCategories = async () => {
             />
           </div>
 
-         <div className="mb-4.5">
-          <Label htmlFor="price">Price</Label>
-          <Input
-            type="number"
-            id="price"
-            name="price"
-            placeholder="Enter price"
-            value={formData.price.toString()}
-            onChange={handleNumberChange}
-            disabled={loading}
-            min={0}
-            step={1} // integer only
-          />
-        </div>
-
           <div className="mb-4.5">
-            <Label htmlFor="barcode">Barcode</Label>
+            <Label htmlFor="price">Price</Label>
             <Input
-              type="text"
-              id="barcode"
-              name="barcode"
-              placeholder="Enter barcode"
-              value={formData.barcode}
-              onChange={handleTextChange}
+              type="number"
+              id="price"
+              name="price"
+              placeholder="Enter price"
+              value={formData.price.toString()}
+              onChange={handleNumberChange}
               disabled={loading}
+              min={"0"}
+              step={1} // integer only
             />
           </div>
-
-        <div className="mb-4.5">
-        <Label htmlFor="stock">Stock</Label>
-        <Input
-          type="number"
-          id="stock"
-          name="stock"
-          placeholder="Enter stock quantity"
-          value={formData.stock.toString()}
-          onChange={handleNumberChange}
-          disabled={loading}
-          min={0}
-          step={1} // integer only
-        />
-      </div>
 
           <div className="flex gap-4">
             <button

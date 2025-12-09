@@ -37,8 +37,8 @@ const navItems: NavItem[] = [
     name: "Products",
     icon: <PageIcon />,
     subItems: [
-      { name: "Category", path: "/blank", pro: false },
-      { name: "Product", path: "/error-404", pro: false },
+      { name: "Category", path: "/category", pro: false },
+      { name: "Product", path: "/product", pro: false },
     ],
   },
   {
@@ -259,7 +259,7 @@ const AppSidebar: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`py-8 flex ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
+        className={`py-8 flex ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-center"
           }`}
       >
         <Link to="#">
@@ -267,16 +267,16 @@ const AppSidebar: React.FC = () => {
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/logo-sikas.png"
+                src="/images/logo/logo-sikas-dashboard.png"
                 alt="Logo"
-                width={40}
+                width={100}
                 height={40}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/logo-sikas.png"
+                src="/images/logo/logo-sikas-dark-dashboard.png"
                 alt="Logo"
-                width={40}
+                width={100}
                 height={40}
               />
             </>

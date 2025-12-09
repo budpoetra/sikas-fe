@@ -5,7 +5,7 @@ interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   // products: Product[];
-  products: Product[] | null; 
+  products: Product[] | null;
   // products: Product[] | Product | null;
   onSelectProduct: (product: Product) => void;
   isLoading: boolean;

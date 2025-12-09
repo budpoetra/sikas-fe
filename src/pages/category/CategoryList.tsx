@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import ComponentCard from "../../components/common/ComponentCard";
@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "../../components/ui/table";
 import Button from "../../components/ui/button/Button";
-import { getCategories, deleteCategory, Category } from '../../services/categoryService';
+import { getCategories, Category } from '../../services/categoryService';
 
 export default function CategoryList() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -22,32 +22,19 @@ export default function CategoryList() {
     fetchCategories();
   }, []);
 
-const fetchCategories = async () => {
-  try {
-    setLoading(true);
-    const data = await getCategories();
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const data = await getCategories();
 
-    const sorted = [...data].sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
+      const sorted = [...data].sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
 
-    setCategories(sorted);
-  } catch (err) {
-    setError('Failed to fetch categories');
-    console.error('Error fetching categories:', err);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
-  const handleDelete = async (id: number) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
-      try {
-        await deleteCategory(id);
-        await fetchCategories(); // Refresh data
-      } catch (err) {
-        console.error('Error deleting category:', err);
-        alert('Failed to delete category');
-      }
+      setCategories(sorted);
+    } catch (err) {
+      setError('Failed to fetch categories');
+      console.error('Error fetching categories:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,14 +112,6 @@ const fetchCategories = async () => {
                               Edit
                             </Button>
                           </Link>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-red-600 hover:text-red-700"
-                            onClick={() => handleDelete(category.id!)}
-                          >
-                            Delete
-                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
