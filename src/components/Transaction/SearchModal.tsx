@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiResponse, Product } from "../../types/transaction";
+import { Product } from "../../types/transaction";
 
 interface SearchModalProps {
   isOpen: boolean;
