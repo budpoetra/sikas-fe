@@ -9,7 +9,7 @@ import TransactionDataTable from "../../components/ReportPage/TransactionDataTab
 import SummaryTable from "../../components/ReportPage/SummaryTable";
 import { useCallback } from "react";
 
-export default function TransactionPage() {
+export default function ReportTransactionPage() {
     const [categoriesData, setCategoriesData] = useState<Category[]>([]);
     const [productsData, setProductsData] = useState<Product[]>([]);
     const [summary, setSummary] = useState<Summary | null>(null);

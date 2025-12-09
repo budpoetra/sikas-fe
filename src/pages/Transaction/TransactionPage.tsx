@@ -6,8 +6,8 @@ export default function TransactionPage() {
   return (
     <div>
       <PageMeta
-        title="SIKAS - Transaction Page"
-        description="SIKAS - Transaction Management Page"
+        title="Transaction | SIKAS"
+        description="Transaction page for managing sales and purchases in SIKAS application."
       />
       <PageBreadcrumb pageTitle="Transaction" />
       <div className="grid grid-cols-1 gap-6">

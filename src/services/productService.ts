@@ -64,9 +64,10 @@ export const updateStock = async (
   }
 };
 
-export const getProducts = async (page = 0, size = 1000): Promise<Product[]> => {
+export const getProducts = async (page = 0, size = 10): Promise<Product[]> => {
   try {
-    const response = await api.get(`/api/v1/product/list`, { params: { page, size } });
+    const response = await axios.get(`/product/list`, { params: { page, size } });
+    console.log('Raw response data:', response.data);
 
     // Cek berbagai struktur response
     let productsData = response.data?.data?.content
@@ -75,9 +76,9 @@ export const getProducts = async (page = 0, size = 1000): Promise<Product[]> => 
 
     if (!Array.isArray(productsData)) productsData = [];
     return productsData;
-  } catch (err: any) {
-    if (err.response) {
-      console.error('Error fetching products:', err.response.status, err.response.data);
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || "Failed to fetch products");
     }
     throw err;
   }
@@ -87,11 +88,11 @@ export const createProduct = async (
   data: Omit<Product, 'id' | 'createdDate' | 'updatedDate' | 'createdBy' | 'updatedBy'>
 ): Promise<Product> => {
   try {
-    const response = await api.post('/api/v1/product', data);
+    const response = await axios.post('/product', data);
     return response.data.data || response.data;
-  } catch (err: any) {
-    if (err.response) {
-      console.error('Error creating product:', err.response.status, err.response.data);
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || "Failed to create product");
     }
     throw err;
   }
@@ -102,11 +103,11 @@ export const updateProduct = async (
   data: Omit<Product, 'id' | 'createdDate' | 'updatedDate' | 'createdBy' | 'updatedBy'>
 ): Promise<Product> => {
   try {
-    const response = await api.patch(`/api/v1/product/${id}`, data);
+    const response = await axios.patch(`/product/${id}`, data);
     return response.data.data || response.data;
-  } catch (err: any) {
-    if (err.response) {
-      console.error('Error updating product:', err.response.status, err.response.data);
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || "Failed to update product");
     }
     throw err;
   }
@@ -114,10 +115,10 @@ export const updateProduct = async (
 
 export const deleteProduct = async (id: number): Promise<void> => {
   try {
-    await api.delete(`/api/v1/product/${id}`);
-  } catch (err: any) {
-    if (err.response) {
-      console.error('Error deleting product:', err.response.status, err.response.data);
+    await axios.delete(`/product/${id}`);
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || "Failed to delete product");
     }
     throw err;
   }

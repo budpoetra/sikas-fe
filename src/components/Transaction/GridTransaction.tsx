@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ComponentCard from "../common/ComponentCard";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
@@ -27,11 +27,11 @@ export default function GridTransaction() {
 
     setIsLoading(true);
     setError(null);
-    
+
     try {
       // Parse query to check if it's a number (ID search)
       const parsedId = parseInt(query.trim());
-      
+
       if (!isNaN(parsedId)) {
         // If query is a number, search by ID
         const product = await transactionService.getProductById(parsedId);
@@ -42,7 +42,7 @@ export default function GridTransaction() {
         const products = await transactionService.searchProducts(query);
         setSearchResults(products);
       }
-      
+
       setIsModalOpen(true);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -64,34 +64,34 @@ export default function GridTransaction() {
   const handleProductSelect = (product: Product) => {
     // Check if product already exists in table
     const existingItemIndex = transactionItems.findIndex(item => item.id === product.id);
-  
-    if (existingItemIndex >= 0) {
-    // Update quantity if product exists
-    const updatedItems = [...transactionItems];
-    updatedItems[existingItemIndex].quantity += 1;
-    updatedItems[existingItemIndex].total = 
-      updatedItems[existingItemIndex].price * updatedItems[existingItemIndex].quantity;
-    setTransactionItems(updatedItems);
-  } else {
-    // Add new item - sesuaikan dengan properti dari API
-    const newItem: TransactionItem = {
-      id: product.id,
-      name: product.productName,  // Ubah product.name menjadi product.productName
-      code: product.productCode,  // Ubah product.code menjadi product.productCode
-      barcode: product.barcode,
-      price: product.price,
-      quantity: 1,
-      total: product.price * 1,
-      productId: product.id,
-      stock: product.stock,  // Tambahkan stock jika diperlukan
-    };
-    setTransactionItems([...transactionItems, newItem]);
-  }
 
-  // Close modal and reset search
-  setIsModalOpen(false);
-  setSearchQuery("");
-  setSearchResults([]);
+    if (existingItemIndex >= 0) {
+      // Update quantity if product exists
+      const updatedItems = [...transactionItems];
+      updatedItems[existingItemIndex].quantity += 1;
+      updatedItems[existingItemIndex].total =
+        updatedItems[existingItemIndex].price * updatedItems[existingItemIndex].quantity;
+      setTransactionItems(updatedItems);
+    } else {
+      // Add new item - sesuaikan dengan properti dari API
+      const newItem: TransactionItem = {
+        id: product.id,
+        name: product.productName,  // Ubah product.name menjadi product.productName
+        code: product.productCode,  // Ubah product.code menjadi product.productCode
+        barcode: product.barcode,
+        price: product.price,
+        quantity: 1,
+        total: product.price * 1,
+        productId: product.id,
+        stock: product.stock,  // Tambahkan stock jika diperlukan
+      };
+      setTransactionItems([...transactionItems, newItem]);
+    }
+
+    // Close modal and reset search
+    setIsModalOpen(false);
+    setSearchQuery("");
+    setSearchResults([]);
   };
 
   // Handle quantity change in table
@@ -134,18 +134,22 @@ export default function GridTransaction() {
       };
 
       const response = await transactionService.createTransaction(transactionData);
-      
+
+      if (!response.success) {
+        throw new Error(response.message || "Transaction creation failed");
+      }
+
       setSuccess("Transaction created successfully!");
-      
+
       // Reset form after successful submission
       setTransactionItems([]);
       setSearchQuery("");
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => {
         setSuccess(null);
       }, 3000);
-      
+
     } catch (error) {
       console.error("Error creating transaction:", error);
       setError("Failed to create transaction. Please try again.");
@@ -168,7 +172,7 @@ export default function GridTransaction() {
             <p className="text-green-700">{success}</p>
           </div>
         )}
-        
+
         {error && (
           <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-700">{error}</p>

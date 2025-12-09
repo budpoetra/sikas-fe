@@ -18,6 +18,7 @@ import ProductList from "./pages/product/ProductList";
 import ProductForm from "./components/product/ProductForm";
 import UsersPage from "./pages/Users/UsersPage";
 import TransactionPage from "./pages/Transaction/TransactionPage";
+import ReportTransactionPage from "./pages/ReportPage/ReportTransactionPage";
 
 export default function App() {
   return (
@@ -27,7 +28,6 @@ export default function App() {
         <Routes>
           {/* Public Routes - Redirect to dashboard if already logged in */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/" element={<PublicRoute><SignIn /></PublicRoute>} />
           <Route path="/signin" element={<PublicRoute><SignIn /></PublicRoute>} />
           <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
           <Route path="/*" element={<PublicRoute><SignIn /></PublicRoute>} />
@@ -40,7 +40,7 @@ export default function App() {
           }>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/product-entry" element={<ProductEntry />} />
-            <Route path="/report/transaction" element={<TransactionPage />} />
+            <Route path="/report/transaction" element={<ReportTransactionPage />} />
             <Route path="/report/product-entry" element={<ProductEntryReport />} />
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/category" element={<CategoryList />} />
