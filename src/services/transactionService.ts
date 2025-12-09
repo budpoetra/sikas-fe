@@ -106,6 +106,19 @@ class TransactionService {
       throw error;
     }
   }
+
+  // Get product by code or barcode (optional)
+  async getProductByCodeOrBarcode(codebarcode: string) {
+    try {
+      const response = await this.api.get(`/product/code-or-barcode`, {
+        params: { value: codebarcode }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching transaction:', error);
+      throw error;
+    }
+  }
 }
 
 export default new TransactionService();

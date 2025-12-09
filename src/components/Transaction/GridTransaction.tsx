@@ -30,25 +30,29 @@ export default function GridTransaction() {
 
     try {
       // Parse query to check if it's a number (ID search)
-      const parsedId = parseInt(query.trim());
+      // const parsedId = parseInt(query.trim());
+      // Search by code or barcode
+      // const product = await transactionService.getProductByCodeOrBarcode(query.trim());
 
-      if (!isNaN(parsedId)) {
-        // If query is a number, search by ID
-        const product = await transactionService.getProductById(parsedId);
-        setSearchResults([product]);
+      const apiResponse = await transactionService.getProductByCodeOrBarcode(query.trim());
+      
+      // Ekstrak data.product dari response
+      if (apiResponse.data) {
+        setSearchResults([apiResponse.data]); // Simpan product (bukan ApiResponse)
       } else {
-        // If query is text, search by name/code/barcode
-        // Note: You might need to adjust this based on your actual API endpoint
-        const products = await transactionService.searchProducts(query);
-        setSearchResults(products);
+        setSearchResults([]);
       }
 
       setIsModalOpen(true);
+
     } catch (error) {
-      console.error("Error fetching products:", error);
-      setError("Failed to search products. Please try again.");
+
+      console.error("Error fetching product:", error);
+      setError("Product not found. Please check the code or barcode.");
       setSearchResults([]);
+
     } finally {
+
       setIsLoading(false);
     }
   };
@@ -76,8 +80,8 @@ export default function GridTransaction() {
       // Add new item - sesuaikan dengan properti dari API
       const newItem: TransactionItem = {
         id: product.id,
-        name: product.productName,  // Ubah product.name menjadi product.productName
-        code: product.productCode,  // Ubah product.code menjadi product.productCode
+        name: product.productName,
+        code: product.productCode,
         barcode: product.barcode,
         price: product.price,
         quantity: 1,
@@ -185,7 +189,7 @@ export default function GridTransaction() {
           <Input
             type="text"
             id="productSearch"
-            placeholder="Enter Product ID, Name, Code, or Barcode and press Enter"
+            placeholder="Enter Product Code or Barcode and press Enter"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -209,7 +213,7 @@ export default function GridTransaction() {
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Grand Total: {calculateGrandTotal()}
+                  Grand Total: Rp. {calculateGrandTotal().toLocaleString()}
                 </h3>
                 <p className="text-sm text-gray-500">
                   {transactionItems.length} item(s) in transaction
