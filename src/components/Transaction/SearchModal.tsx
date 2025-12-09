@@ -4,9 +4,7 @@ import { Product } from "../../types/transaction";
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // products: Product[];
   products: Product[] | null;
-  // products: Product[] | Product | null;
   onSelectProduct: (product: Product) => void;
   isLoading: boolean;
 }
@@ -62,22 +60,22 @@ const SearchModal: React.FC<SearchModalProps> = ({
               <div className="space-y-3">
                 {products.map((product) => (
                   <div
-                    key={product.data.id}
+                    key={product.id}
                     className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
-                    onClick={() => onSelectProduct(product.data)}
+                    onClick={() => onSelectProduct(product)}
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="font-medium text-gray-900">{product.data.productName}</h4>
+                        <h4 className="font-medium text-gray-900">{product.productName}</h4>
                         <p className="text-sm text-gray-500 mt-1">
-                          Code: {product.data.productCode} | Barcode: {product.data.barcode}
+                          Code: {product.productCode} | Barcode: {product.barcode}
                         </p>
                       </div>
                       <div className="text-right">
                         <span className="font-semibold text-gray-900">
-                          Rp {product.data.price}
+                          Rp. {product.price ? product.price.toLocaleString() : "-"}
                         </span>
-                        <p className="text-xs text-gray-500 mt-1">Stock: {product.data.stock}</p>
+                        <p className="text-xs text-gray-500 mt-1">Stock: {product.stock ? product.stock.toLocaleString() : "-"}</p>
                       </div>
                     </div>
                   </div>

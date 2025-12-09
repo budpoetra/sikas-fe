@@ -57,14 +57,14 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                       Code: {item.code} | Barcode: {item.barcode}
                     </div>
                     {item.stock !== undefined && (
-      <div className="text-xs text-gray-400 mt-1">
-        Stock: {item.stock}
-      </div>
-    )}
+                      <div className="text-xs text-gray-400 mt-1">
+                        Stock: {item.stock ? item.stock.toLocaleString() : "-"}
+                      </div>
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{item.price}</div>
+                  <div className="text-sm text-gray-900">Rp. {item.price ? item.price.toLocaleString() : "-"}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
@@ -91,7 +91,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-semibold text-gray-900">
-                    {item.total}
+                    Rp. {item.total ? item.total.toLocaleString() : "-"}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -112,7 +112,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-lg font-bold text-gray-900">
-                  {calculateTotal()}
+                  Rp. {calculateTotal().toLocaleString()}
                 </div>
               </td>
               <td className="px-6 py-4"></td>
