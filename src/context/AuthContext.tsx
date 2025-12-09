@@ -40,7 +40,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Initialize from localStorage
     const token = localStorage.getItem('token');
     const userStr = localStorage.getItem('user');
-
     return {
       isAuthenticated: !!token && localStorage.getItem('isAuthenticated') === 'true',
       token,
@@ -85,7 +84,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('isAuthenticated');
-
     // Clear axios headers
     delete axios.defaults.headers.common['Authorization'];
   };
