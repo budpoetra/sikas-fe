@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { useSignOut } from "../../hooks/useSignOut";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +20,10 @@ export default function UserDropdown() {
   const handleSignOut = (e: React.MouseEvent) => {
     e.preventDefault(); // Mencegah navigasi default dari Link
     e.stopPropagation(); // Mencegah event bubbling
-    
+
     // Tutup dropdown
     closeDropdown();
-    
+
     // Panggil fungsi sign out
     signOut();
   };
@@ -39,9 +40,8 @@ export default function UserDropdown() {
 
         <span className="block mr-1 font-medium text-theme-sm">{user?.userTypes || 'Admin'}</span>
         <svg
-          className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            }`}
           width="18"
           height="20"
           viewBox="0 0 18 20"
@@ -71,6 +71,30 @@ export default function UserDropdown() {
             {user?.userTypes || 'adminsikas@gmail.com'}
           </span>
         </div>
+
+        <Link to="/profile"
+          className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300 w-full text-left"
+          aria-label="Sign out"
+        >
+          <svg
+            className="fill-gray-500 group-hover:fill-gray-700 dark:group-hover:fill-gray-300"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 12c2.7614 0 5-2.2386 5-5s-2.2386-5-5-5-5 2.2386-5 5 2.2386 5 5 5z"
+              fill=""
+            />
+            <path
+              d="M4 21c0-4 4-6 8-6s8 2 8 6v1H4v-1z"
+              fill=""
+            />
+          </svg>
+          Profile
+        </Link>
 
         <button
           onClick={handleSignOut}

@@ -11,11 +11,11 @@ interface SignInFormProps {
   onClearError?: () => void;
 }
 
-export default function SignInForm({ 
-  onLogin, 
-  isLoading: externalLoading, 
+export default function SignInForm({
+  onLogin,
+  isLoading: externalLoading,
   error,
-  onClearError 
+  onClearError
 }: SignInFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
@@ -40,7 +40,7 @@ export default function SignInForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!username.trim() || !password.trim()) {
       setLocalError("Username and password must be filled in");
       return;
@@ -48,7 +48,7 @@ export default function SignInForm({
 
     setIsSubmitting(true);
     setLocalError(null);
-    
+
     try {
       await onLogin({ username, password });
       // Jika berhasil, form akan di-reset oleh redirect
@@ -76,7 +76,7 @@ export default function SignInForm({
               Enter your username and password to sign in!
             </p>
           </div>
-          
+
           {/* Error Message */}
           {localError && (
             <div className="p-3 mb-4 rounded-md bg-error-50 dark:bg-error-900/30 border border-error-200 dark:border-error-800">
@@ -94,7 +94,7 @@ export default function SignInForm({
               </div>
             </div>
           )}
-          
+
           <div>
             <form onSubmit={handleSubmit}>
               <div className="space-y-6">
@@ -102,8 +102,8 @@ export default function SignInForm({
                   <Label>
                     Username <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input 
-                    placeholder="info@gmail.com" 
+                  <Input
+                    placeholder="Enter your username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     disabled={isLoading}
@@ -136,8 +136,8 @@ export default function SignInForm({
                   </div>
                 </div>
                 <div>
-                  <Button 
-                    className="w-full" 
+                  <Button
+                    className="w-full"
                     type="submit"
                     disabled={isLoading}
                     isLoading={isLoading}

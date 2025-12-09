@@ -19,7 +19,7 @@ const FeaturesSection: React.FC = () => {
         <section id="features" className="py-20 bg-gray-100 text-center px-40">
             <div className="container mx-auto text-center">
                 <h2 className="text-4xl font-extrabold text-gray-800 mb-12">
-                    Fitur Utama SIKAS
+                    SIKAS Featured Features
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <FeatureCard
@@ -51,8 +51,8 @@ const FeaturesSection: React.FC = () => {
                                 <circle cx="148" cy="64" r="1.5" />
                             </g>
                         </svg>}
-                        title="Kasir Cepat & Mudah"
-                        description="Proses transaksi penjualan dengan cepat, mendukung berbagai metode pembayaran, dan cetak struk otomatis."
+                        title="Fast & Easy Cashier"
+                        description="Process sales transactions quickly, support various payment methods, and print receipts automatically."
                     />
                     <FeatureCard
                         icon={<svg
@@ -92,8 +92,8 @@ const FeaturesSection: React.FC = () => {
                             </g>
                         </svg>
                         }
-                        title="Manajemen Stok Efisien"
-                        description="Lacak stok secara real-time, dapatkan notifikasi barang menipis, dan kelola inventaris dengan akurat."
+                        title="Efficient Stock Management"
+                        description="Track stock in real-time, receive low stock notifications, and manage inventory accurately."
                     />
                     <FeatureCard
                         icon={<svg
@@ -139,8 +139,8 @@ const FeaturesSection: React.FC = () => {
                             </g>
                         </svg>
                         }
-                        title="Laporan Penjualan Lengkap"
-                        description="Akses laporan penjualan harian, mingguan, bulanan untuk analisis kinerja bisnis yang lebih baik."
+                        title="Comprehensive Sales Reports"
+                        description="Access daily, weekly, and monthly sales reports for better business performance analysis."
                     />
                     <FeatureCard
                         icon={<svg
@@ -184,8 +184,8 @@ const FeaturesSection: React.FC = () => {
                             </g>
                         </svg>
                         }
-                        title="Manajemen Produk Komprehensif"
-                        description="Tambahkan, edit, dan atur produk Anda dengan mudah, termasuk harga, kategori, dan varian."
+                        title="Comprehensive Product Management"
+                        description="Add, edit, and organize your products easily, including prices, categories, and variants."
                     />
                 </div>
             </div>
