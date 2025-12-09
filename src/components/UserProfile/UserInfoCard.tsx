@@ -3,14 +3,77 @@ import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
+import { changePassword, Profile } from "../../services/profileService";
+import { useState } from "react";
+import useAlert from "../../hooks/useAlert";
+import Form from "../form/Form";
+import Alert from "../ui/alert/Alert";
 
-export default function UserInfoCard() {
+export default function UserInfoCard({ profile }: { profile: Profile | null }) {
   const { isOpen, openModal, closeModal } = useModal();
-  const handleSave = () => {
-    // Handle save logic here
-    console.log("Saving changes...");
-    closeModal();
+
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorOldPassword, setErrorOldPassword] = useState(false);
+  const [errorMessageOldPassword, setErrorMessageOldPassword] = useState<string | null>(null);
+  const [errorNewPassword, setErrorNewPassword] = useState(false);
+  const [errorMessageNewPassword, setErrorMessageNewPassword] = useState<string | null>(null);
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
+  const [errorMessageConfirmPassword, setErrorMessageConfirmPassword] = useState<string | null>(null);
+
+  const token = localStorage.getItem("token");
+  const alert = useAlert();
+
+  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleChangePassword();
   };
+
+  async function handleChangePassword() {
+    if (!token) return;
+
+    // Reset errors
+    setError(false);
+    setErrorMessage(null);
+    setErrorOldPassword(false);
+    setErrorMessageOldPassword(null);
+    setErrorNewPassword(false);
+    setErrorMessageNewPassword(null);
+    setErrorConfirmPassword(false);
+    setErrorMessageConfirmPassword(null);
+
+    // Validate password match
+    if (newPassword !== confirmPassword) {
+      setError(true);
+      setErrorMessage("New password and confirm password do not match.");
+      setErrorNewPassword(true);
+      setErrorMessageNewPassword("Passwords do not match.");
+      return;
+    }
+
+    const response = await changePassword(token, oldPassword, newPassword, confirmPassword);
+
+    if (response.success) {
+      alert.success("Password changed successfully.");
+      closeModal();
+    } else {
+      setError(true);
+      setErrorMessage(response.message);
+      if (response.data) {
+        setErrorOldPassword(!!response.data.oldPassword);
+        setErrorMessageOldPassword(response.data.oldPassword ?? null);
+        setErrorNewPassword(!!response.data.newPassword);
+        setErrorMessageNewPassword(response.data.newPassword ?? null);
+        setErrorConfirmPassword(!!response.data.confirmPassword);
+        setErrorMessageConfirmPassword(response.data.confirmPassword ?? null);
+      }
+    }
+  }
+
   return (
     <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
@@ -22,19 +85,10 @@ export default function UserInfoCard() {
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                First Name
+                Full Name
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                Musharof
-              </p>
-            </div>
-
-            <div>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                Last Name
-              </p>
-              <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                Chowdhury
+                {profile ? profile.fullName : "Loading..."}
               </p>
             </div>
 
@@ -43,7 +97,7 @@ export default function UserInfoCard() {
                 Email address
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                randomuser@pimjo.com
+                {profile ? profile.email : "Loading..."}
               </p>
             </div>
 
@@ -52,16 +106,16 @@ export default function UserInfoCard() {
                 Phone
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                +09 363 398 46
+                {profile ? profile.phone : "Loading..."}
               </p>
             </div>
 
             <div>
               <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                Bio
+                Status
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                Team Manager
+                {profile ? (profile.status === 1 ? "Active" : "Inactive") : "Loading..."}
               </p>
             </div>
           </div>
@@ -86,7 +140,7 @@ export default function UserInfoCard() {
               fill=""
             />
           </svg>
-          Edit
+          Change Password
         </button>
       </div>
 
@@ -94,76 +148,56 @@ export default function UserInfoCard() {
         <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
           <div className="px-2 pr-14">
             <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-              Edit Personal Information
+              Edit Password
             </h4>
             <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-              Update your details to keep your profile up-to-date.
+              Update your password to keep your profile secure.
             </p>
           </div>
-          <form className="flex flex-col">
+
+          {
+            error ?
+              <Alert
+                variant="error"
+                title="Failed to Change Password"
+                message={errorMessage || "There was an error changing your password. Please try again."}
+                showLink={false}
+              /> : null
+          }
+
+          <Form className="flex flex-col" onSubmit={handleSave}>
+            <Input type="hidden" name="id" value={profile?.id} />
             <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
-              <div>
-                <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
-                  Social Links
-                </h5>
-
-                <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                  <div>
-                    <Label>Facebook</Label>
-                    <Input
-                      type="text"
-                      value="https://www.facebook.com/PimjoHQ"
-                    />
-                  </div>
-
-                  <div>
-                    <Label>X.com</Label>
-                    <Input type="text" value="https://x.com/PimjoHQ" />
-                  </div>
-
-                  <div>
-                    <Label>Linkedin</Label>
-                    <Input
-                      type="text"
-                      value="https://www.linkedin.com/company/pimjo"
-                    />
-                  </div>
-
-                  <div>
-                    <Label>Instagram</Label>
-                    <Input type="text" value="https://instagram.com/PimjoHQ" />
-                  </div>
-                </div>
-              </div>
               <div className="mt-7">
-                <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
-                  Personal Information
-                </h5>
-
                 <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                  <div className="col-span-2 lg:col-span-1">
-                    <Label>First Name</Label>
-                    <Input type="text" value="Musharof" />
-                  </div>
-
-                  <div className="col-span-2 lg:col-span-1">
-                    <Label>Last Name</Label>
-                    <Input type="text" value="Chowdhury" />
-                  </div>
-
-                  <div className="col-span-2 lg:col-span-1">
-                    <Label>Email Address</Label>
-                    <Input type="text" value="randomuser@pimjo.com" />
-                  </div>
-
-                  <div className="col-span-2 lg:col-span-1">
-                    <Label>Phone</Label>
-                    <Input type="text" value="+09 363 398 46" />
+                  <div className="col-span-2">
+                    <Label>Old Password</Label>
+                    <Input
+                      type="password"
+                      onChange={e => setOldPassword(e.target.value)}
+                      error={errorOldPassword}
+                      hint={errorOldPassword ? errorMessageOldPassword ?? "" : ""}
+                    />
                   </div>
 
                   <div className="col-span-2">
-                    <Label>Bio</Label>
-                    <Input type="text" value="Team Manager" />
+                    <Label>New Password</Label>
+                    <Input
+                      type="password"
+                      onChange={e => setNewPassword(e.target.value)}
+                      error={errorNewPassword}
+                      hint={errorNewPassword ? errorMessageNewPassword ?? "" : ""}
+                    />
+                  </div>
+
+                  <div className="col-span-2">
+                    <Label>Confirm New Password</Label>
+                    <Input
+                      type="password"
+                      onChange={e => setConfirmPassword(e.target.value)}
+                      error={errorConfirmPassword}
+                      hint={errorConfirmPassword ? errorMessageConfirmPassword ?? "" : ""}
+                    />
                   </div>
                 </div>
               </div>
@@ -172,11 +206,11 @@ export default function UserInfoCard() {
               <Button size="sm" variant="outline" onClick={closeModal}>
                 Close
               </Button>
-              <Button size="sm" onClick={handleSave}>
+              <Button size="sm">
                 Save Changes
               </Button>
             </div>
-          </form>
+          </Form>
         </div>
       </Modal>
     </div>

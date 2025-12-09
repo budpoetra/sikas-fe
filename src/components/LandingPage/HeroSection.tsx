@@ -5,17 +5,17 @@ const HeroSection: React.FC = () => {
         <section className="bg-gradient-to-r from-blue-400 to-indigo-500 text-white py-20 px-4 text-center">
             <div className="container mx-auto">
                 <h1 className="text-5xl font-extrabold mb-4">
-                    Sistem Informasi Kasir dan Stok <br /> untuk Bisnis Anda
+                    Cashier and Stock Information System <br /> for Your Business
                 </h1>
                 <p className="text-xl mb-8 max-w-2xl mx-auto">
-                    Kelola penjualan, inventaris, dan laporan dengan mudah dan efisien menggunakan SIKAS.
+                    Manage sales, inventory, and reports easily and efficiently using SIKAS.
                 </p>
                 <div className="space-x-4">
                     <button className="bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300">
-                        Coba Sekarang
+                        Try Now
                     </button>
                     <button className="border border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-blue-600 transition duration-300">
-                        Daftar Gratis
+                        Register for Free
                     </button>
                 </div>
                 <div className="mt-5">

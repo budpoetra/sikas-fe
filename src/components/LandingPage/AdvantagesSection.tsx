@@ -21,7 +21,7 @@ const AdvantagesSection: React.FC = () => {
         <section id="advantages" className="py-20 px-40 bg-white">
             <div className="container mx-auto">
                 <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-12">
-                    Mengapa Memilih SIKAS?
+                    Why Choose SIKAS?
                 </h2>
                 <div className="grid md:grid-cols-2 gap-10">
                     <AdvantageCard
@@ -51,38 +51,37 @@ const AdvantagesSection: React.FC = () => {
                             </svg>
 
                         }
-                        title="Dukungan Penuh untuk UMKM"
-                        description="SIKAS dirancang khusus untuk memenuhi kebutuhan UMKM dengan fitur yang relevan dan harga terjangkau."
+                        title="Full Support for MSMEs"
+                        description="SIKAS is specifically designed to meet the needs of MSMEs with relevant features and affordable prices."
                     />
                     <AdvantageCard
-                        icon={
-                            <svg
-                                className="w-20 h-20"
-                                viewBox="0 0 200 200"
-                                xmlns="http://www.w3.org/2000/svg"
-                                role="img"
-                                aria-label="Tampilan UI Modern dan Intuitif"
-                            >
-                                <circle cx="100" cy="100" r="94" fill="none" stroke="#6366F1" strokeWidth="6" />
+                        icon={<svg
+                            className="w-20 h-20"
+                            viewBox="0 0 200 200"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Tampilan UI Modern dan Intuitif"
+                        >
+                            <circle cx="100" cy="100" r="94" fill="none" stroke="#6366F1" strokeWidth="6" />
 
-                                <rect x="48" y="50" width="104" height="80" rx="10" fill="#6366F1" />
-                                <rect x="58" y="60" width="84" height="22" rx="6" fill="#ffffff" />
-                                <rect x="58" y="90" width="38" height="30" rx="6" fill="#818CF8" />
-                                <rect x="104" y="90" width="38" height="30" rx="6" fill="#A5B4FC" />
+                            <rect x="48" y="50" width="104" height="80" rx="10" fill="#6366F1" />
+                            <rect x="58" y="60" width="84" height="22" rx="6" fill="#ffffff" />
+                            <rect x="58" y="90" width="38" height="30" rx="6" fill="#818CF8" />
+                            <rect x="104" y="90" width="38" height="30" rx="6" fill="#A5B4FC" />
 
-                                <g transform="translate(122,70)">
-                                    <polygon
-                                        points="0,0 14,10 6,12 10,22 2,14 0,22"
-                                        fill="#FCD34D"
-                                        transform="scale(0.9)"
-                                    />
-                                </g>
+                            <g transform="translate(122,70)">
+                                <polygon
+                                    points="0,0 14,10 6,12 10,22 2,14 0,22"
+                                    fill="#FCD34D"
+                                    transform="scale(0.9)"
+                                />
+                            </g>
 
-                                <circle cx="140" cy="66" r="6" fill="#F87171" />
-                            </svg>
+                            <circle cx="140" cy="66" r="6" fill="#F87171" />
+                        </svg>
                         }
-                        title="Tampilan UI Modern dan Intuitif"
-                        description="Antarmuka pengguna yang bersih, modern, dan mudah digunakan, mempercepat adaptasi pengguna baru."
+                        title="Modern and Intuitive UI Display"
+                        description="A clean, modern, and user-friendly interface that accelerates new user adoption."
                     />
                     <AdvantageCard
                         icon={
@@ -119,8 +118,8 @@ const AdvantagesSection: React.FC = () => {
                                 </g>
                             </svg>
                         }
-                        title="Hemat Waktu & Biaya Operasional"
-                        description="Otomatisasi proses bisnis untuk mengurangi kesalahan manual dan memangkas biaya operasional."
+                        title="Save Time & Operational Costs"
+                        description="Automate business processes to reduce manual errors and cut operational costs."
                     />
                     <AdvantageCard
                         icon={
@@ -159,8 +158,8 @@ const AdvantagesSection: React.FC = () => {
 
                             </svg>
                         }
-                        title="Kemudahan Penggunaan"
-                        description="Tidak perlu keahlian khusus, SIKAS mudah dipelajari dan dioperasikan oleh siapa saja."
+                        title="Ease of Use"
+                        description="No special skills required, SIKAS is easy to learn and operate by anyone."
                     />
                 </div>
             </div>

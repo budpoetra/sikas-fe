@@ -3,7 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
-import UserProfiles from "./pages/UserProfiles";
+import UserProfiles from "./pages/UserProfile/UserProfiles";
 import Videos from "./pages/UiElements/Videos";
 import Images from "./pages/UiElements/Images";
 import Alerts from "./pages/UiElements/Alerts";
@@ -22,6 +22,9 @@ import Home from "./pages/Dashboard/Home";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import ProductEntry from "./pages/ProductEntry/ProductEntry";
+import TransactionPage from "./pages/ReportPage/TransactionPage";
+import ProductEntryReport from "./pages/ReportPage/ProductEntryReport";
 
 export default function App() {
   return (
@@ -42,7 +45,12 @@ export default function App() {
             </ProtectedRoute>
           }>
             <Route path="/dashboard" element={<Home />} />
+            <Route path="/product-entry" element={<ProductEntry />} />
+            <Route path="/report/transaction" element={<TransactionPage />} />
+            <Route path="/report/product-entry" element={<ProductEntryReport />} />
             <Route path="/profile" element={<UserProfiles />} />
+
+            {/* Default Template Route */}
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/blank" element={<Blank />} />
             <Route path="/form-elements" element={<FormElements />} />
