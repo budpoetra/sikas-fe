@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Label from '../form/Label';
 import Input from '../form/input/InputField';
-import Button from '../ui/button/Button';
 import { createCategory, updateCategory, getCategories } from '../../services/categoryService';
-import { Category } from '../../services/categoryService';
 
 interface CategoryFormData {
   category: string;
