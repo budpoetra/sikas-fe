@@ -25,6 +25,7 @@ export default function SignInForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = useState("");
+  const reCaptchaSiteKey = env.VITE_RECAPTCHA_SITE_KEY;
 
   // Clear error when user starts typing
   useEffect(() => {
@@ -135,7 +136,7 @@ export default function SignInForm({
                 {/* reCAPTCHA */}
                 <div className="flex justify-center">  {/* ⬅️ styling bebas disesuaikan */}
                   <ReCaptcha
-                    siteKey={env.VITE_API_URL}
+                    siteKey={reCaptchaSiteKey}
                     onVerify={(token) => setCaptchaToken(token)}
                   />
                 </div>
