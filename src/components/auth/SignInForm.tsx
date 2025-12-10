@@ -4,9 +4,10 @@ import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
 import ReCaptcha from "../reCaptcha";
+import { env } from "@/config/env";
 
 interface SignInFormProps {
-  onLogin: (credentials: { username: string; password: string; captchaToken: string }) => Promise<void>; // ⬅️ tambah captchaToken
+  onLogin: (credentials: { username: string; password: string; captchaToken: string }) => Promise<void>;
   isLoading?: boolean;
   error?: string | null;
   onClearError?: () => void;
@@ -134,7 +135,7 @@ export default function SignInForm({
                 {/* reCAPTCHA */}
                 <div className="flex justify-center">  {/* ⬅️ styling bebas disesuaikan */}
                   <ReCaptcha
-                    siteKey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                    siteKey={env.VITE_API_URL}
                     onVerify={(token) => setCaptchaToken(token)}
                   />
                 </div>
