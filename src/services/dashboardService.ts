@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { env } from '@/config/env';
 
 export interface LowStockItem {
   id: number;
@@ -14,7 +15,7 @@ export interface DashboardSummary {
   lowStockItems: LowStockItem[];
 }
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = env.VITE_API_URL;
 
 // axios instance with token
 const api = axios.create({
@@ -32,13 +33,13 @@ api.interceptors.request.use((config) => {
 
 /**
  * Get dashboard summary data
- * GET /api/v1/dashboard/summary
+ * GET /dashboard/summary
  */
 export const getDashboardSummary = async (): Promise<DashboardSummary> => {
   try {
-    console.log('Fetching dashboard summary from:', '/api/v1/dashboard/summary');
+    console.log('Fetching dashboard summary from:', '/dashboard/summary');
 
-    const response = await api.get('/api/v1/dashboard/summary');
+    const response = await api.get('/dashboard/summary');
 
     console.log('Dashboard response:', response.data);
 
