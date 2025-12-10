@@ -5,6 +5,7 @@ import AuthLayout from "./AuthPageLayout";
 import SignInForm from "../../components/auth/SignInForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { env } from "@/config/env";
 
 // Define types for API response
 interface LoginResponse {
@@ -34,7 +35,7 @@ interface ErrorResponse {
 const useApi = () => {
   return useMemo(() => {
     const api = axios.create({
-      baseURL: import.meta.env.VITE_API_URL,
+      baseURL: env.VITE_API_URL,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -71,7 +72,7 @@ const useLogin = () => {
 
 
   const handleLogin = useCallback(
-    async (credentials: { username: string; password: string }) => {
+    async (credentials: { username: string; password: string, captchaToken: string }) => {
       setIsLoading(true);
       setError(null);
 
@@ -126,26 +127,26 @@ const getRedirectPath = (role?: string): string => {
   const rolePaths: Record<string, string> = {
     admin: "/dashboard",
   };
-  
+
   return rolePaths[role || ""] || "/dashboard";
 };
 
 const getErrorMessage = (error: any): string => {
   if (axios.isAxiosError<ErrorResponse>(error)) {
     const axiosError = error as AxiosError<ErrorResponse>;
-    
+
     if (axiosError.response) {
       const { status, data } = axiosError.response;
-      
+
       // Handle based on your API error response structure
       if (data?.message) {
         return data.message;
       }
-      
+
       if (data?.error) {
         return data.error;
       }
-      
+
       switch (status) {
         case 400:
           return "Invalid request. Please check your input";
@@ -167,20 +168,20 @@ const getErrorMessage = (error: any): string => {
           return `Authentication failed (Error ${status})`;
       }
     }
-    
+
     if (axiosError.code === "ECONNABORTED") {
       return "Request timeout. Please check your connection";
     }
-    
+
     if (axiosError.code === "NETWORK_ERROR" || !axiosError.response) {
       return "Cannot connect to server. Please check your network connection";
     }
   }
-  
+
   if (error.message) {
     return error.message;
   }
-  
+
   return "An unexpected error occurred during login";
 };
 
@@ -194,8 +195,8 @@ export default function SignIn() {
         description="Sign in to Sistem Informasi Kasir & Stock"
       />
       <AuthLayout>
-        <SignInForm 
-          onLogin={handleLogin} 
+        <SignInForm
+          onLogin={handleLogin}
           isLoading={isLoading}
           error={error}
           onClearError={clearError}

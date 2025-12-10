@@ -3,24 +3,22 @@ import { AuthProvider } from './context/AuthContext';
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
-import UserProfiles from "./pages/UserProfiles";
-import Videos from "./pages/UiElements/Videos";
-import Images from "./pages/UiElements/Images";
-import Alerts from "./pages/UiElements/Alerts";
-import Badges from "./pages/UiElements/Badges";
-import Avatars from "./pages/UiElements/Avatars";
-import Buttons from "./pages/UiElements/Buttons";
-import LineChart from "./pages/Charts/LineChart";
-import BarChart from "./pages/Charts/BarChart";
-import Calendar from "./pages/Calendar";
-import BasicTables from "./pages/Tables/BasicTables";
-import FormElements from "./pages/Forms/FormElements";
-import Blank from "./pages/Blank";
+import UserProfiles from "./pages/UserProfile/UserProfiles";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
-import Home from "./pages/Dashboard/Home";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicRoute from "./components/auth/PublicRoute";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import ProductEntry from "./pages/ProductEntry/ProductEntry";
+import ProductEntryReport from "./pages/ReportPage/ProductEntryReport";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import CategoryList from "./pages/category/CategoryList";
+import CategoryForm from "./components/category/CategoryForm";
+import ProductList from "./pages/product/ProductList";
+import ProductForm from "./components/product/ProductForm";
+import UsersPage from "./pages/Users/UsersPage";
+import TransactionPage from "./pages/Transaction/TransactionPage";
+import ReportTransactionPage from "./pages/ReportPage/ReportTransactionPage";
 
 export default function App() {
   return (
@@ -29,7 +27,7 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           {/* Public Routes - Redirect to dashboard if already logged in */}
-          <Route path="/" element={<PublicRoute><SignIn /></PublicRoute>} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/signin" element={<PublicRoute><SignIn /></PublicRoute>} />
           <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
           <Route path="/*" element={<PublicRoute><SignIn /></PublicRoute>} />
@@ -40,9 +38,22 @@ export default function App() {
               <AppLayout />
             </ProtectedRoute>
           }>
-            <Route path="/dashboard" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/product-entry" element={<ProductEntry />} />
+            <Route path="/report/transaction" element={<ReportTransactionPage />} />
+            <Route path="/report/product-entry" element={<ProductEntryReport />} />
             <Route path="/profile" element={<UserProfiles />} />
-            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/category" element={<CategoryList />} />
+            <Route path="/category/create" element={<CategoryForm />} />
+            <Route path="/category/edit/:id" element={<CategoryForm />} />
+            <Route path="/product" element={<ProductList />} />
+            <Route path="/product/create" element={<ProductForm />} />
+            <Route path="/product/edit/:id" element={<ProductForm />} />
+            <Route path="/transaction" element={<TransactionPage />} />
+            <Route path="/users" element={<UsersPage />} />
+
+            {/* Default Template Route */}
+            {/* <Route path="/calendar" element={<Calendar />} />
             <Route path="/blank" element={<Blank />} />
             <Route path="/form-elements" element={<FormElements />} />
             <Route path="/basic-tables" element={<BasicTables />} />
@@ -53,7 +64,7 @@ export default function App() {
             <Route path="/images" element={<Images />} />
             <Route path="/videos" element={<Videos />} />
             <Route path="/line-chart" element={<LineChart />} />
-            <Route path="/bar-chart" element={<BarChart />} />
+            <Route path="/bar-chart" element={<BarChart />} /> */}
           </Route>
 
           {/* Fallback Route */}
