@@ -60,7 +60,11 @@ jobs:
             docker run -d \
               --name sikas-fe \
               -p 8089:80 \
-              --restart=always \
+              -e VITE_APP_NAME="Sikas FE" \
+              -e VITE_API_URL="${{ secrets.VITE_API_URL }}" \
+              -e VITE_ENV="production" \
+              -e VITE_VERSION="1.0.0" \
+              -e VITE_RECAPTCHA_SITE_KEY="${{ secrets.VITE_RECAPTCHA_SITE_KEY }}" \
               ${{ secrets.DOCKER_USERNAME }}/sikas-fe-image:latest
 
             echo "Deployment completed."
