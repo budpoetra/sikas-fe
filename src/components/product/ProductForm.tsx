@@ -11,7 +11,6 @@ interface ProductFormData {
   categoryId: number;
   price: number;
   stock: number;
-  barcode: string;
   productCode: string;
 }
 
@@ -25,7 +24,6 @@ export default function ProductForm() {
     categoryId: 0,
     price: 0,
     stock: 0,
-    barcode: '',
     productCode: ''
   });
   const [categories, setCategories] = useState<Category[]>([]);
@@ -61,7 +59,6 @@ export default function ProductForm() {
           categoryId: product.categoryId || 0,
           price: product.price || 0,
           stock: product.stock || 0,
-          barcode: product.barcode || '',
           productCode: product.productCode || ''
         });
       } else {
@@ -84,8 +81,8 @@ export default function ProductForm() {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: ['price', 'stock', 'categoryId'].includes(name)
-        ? (value === '' ? 0 : parseInt(value)) // gunakan parseInt agar integer
+      [name]: ['price', 'categoryId'].includes(name)
+        ? (value === '' ? 0 : parseInt(value))
         : value
     }));
   };
@@ -105,16 +102,6 @@ export default function ProductForm() {
 
     if (formData.price <= 0) {
       setError('Price must be greater than 0');
-      return;
-    }
-
-    if (formData.stock < 0) {
-      setError('Stock cannot be negative');
-      return;
-    }
-
-    if (!formData.barcode.trim()) {
-      setError('Barcode is required');
       return;
     }
 
