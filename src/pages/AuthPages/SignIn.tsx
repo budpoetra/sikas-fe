@@ -5,6 +5,7 @@ import AuthLayout from "./AuthPageLayout";
 import SignInForm from "../../components/auth/SignInForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { env } from "@/config/env";
 
 // Define types for API response
 interface LoginResponse {
@@ -34,7 +35,7 @@ interface ErrorResponse {
 const useApi = () => {
   return useMemo(() => {
     const api = axios.create({
-      baseURL: import.meta.env.VITE_API_URL,
+      baseURL: env.VITE_API_URL,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

@@ -1,3 +1,4 @@
+import { env } from '@/config/env';
 import axios from 'axios';
 
 export interface Category {
@@ -10,7 +11,7 @@ export interface Category {
   products?: any[]; // Reference to related products (not needed in frontend)
 }
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = env.VITE_API_URL;
 
 // axios instance agar token masuk otomatis
 const api = axios.create({
@@ -30,9 +31,9 @@ api.interceptors.request.use((config) => {
 
 export const getCategories = async (page = 0, size = 1000): Promise<Category[]> => {
   try {
-    console.log("Fetching categories from:", `/api/v1/category/list`);
+    console.log("Fetching categories from:", `/category/list`);
 
-    const response = await api.get(`/api/v1/category/list`, {
+    const response = await api.get(`/category/list`, {
       params: { page, size },
     });
 
@@ -65,7 +66,7 @@ export const getCategories = async (page = 0, size = 1000): Promise<Category[]> 
 export const createCategory = async (data: Omit<Category, 'id' | 'createdDate' | 'updatedDate' | 'createdBy' | 'updatedBy'>): Promise<Category> => {
   try {
     console.log('Creating category:', data);
-    const response = await api.post('/api/v1/category', data);
+    const response = await api.post('/category', data);
     console.log('Category created:', response.data);
     return response.data.data || response.data;
   } catch (error: any) {
@@ -81,7 +82,7 @@ export const createCategory = async (data: Omit<Category, 'id' | 'createdDate' |
 export const updateCategory = async (id: number, data: Omit<Category, 'id' | 'createdDate' | 'updatedDate' | 'createdBy' | 'updatedBy'>): Promise<Category> => {
   try {
     console.log('Updating category:', id, data);
-    const response = await api.put(`/api/v1/category/${id}`, data);
+    const response = await api.put(`/category/${id}`, data);
     console.log('Category updated:', response.data);
     return response.data.data || response.data;
   } catch (error: any) {
@@ -97,7 +98,7 @@ export const updateCategory = async (id: number, data: Omit<Category, 'id' | 'cr
 export const deleteCategory = async (id: number): Promise<void> => {
   try {
     console.log('Deleting category:', id);
-    await api.delete(`/api/v1/category/${id}`);
+    await api.delete(`/category/${id}`);
     console.log('Category deleted successfully');
   } catch (error: any) {
     console.error('Error deleting category:', error);

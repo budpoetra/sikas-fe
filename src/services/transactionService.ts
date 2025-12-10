@@ -1,5 +1,6 @@
 // services/transactionService.ts
 import axios, { AxiosInstance } from 'axios';
+import { env } from '@/config/env';
 
 export interface TransactionDetail {
   productId: number;
@@ -28,7 +29,7 @@ class TransactionService {
   private api: AxiosInstance;
 
   constructor() {
-    const baseURL = import.meta.env.VITE_API_URL;
+    const baseURL = env.VITE_API_URL;
 
     this.api = axios.create({
       baseURL,
