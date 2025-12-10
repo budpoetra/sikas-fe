@@ -29,6 +29,8 @@ export default function SignInForm({
 
   // Clear error when user starts typing
   useEffect(() => {
+    console.log("reCaptchaSiteKey :", reCaptchaSiteKey);
+
     if (onClearError && (username || password)) {
       onClearError();
       setLocalError(null);
