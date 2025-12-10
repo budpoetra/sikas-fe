@@ -7,8 +7,9 @@ import App from "./App.tsx";
 import { AppWrapper } from "./components/common/PageMeta.tsx";
 import { ThemeProvider } from "./context/ThemeContext.tsx";
 import axios from "axios";
+import { env } from "@/config/env";
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.defaults.baseURL = env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
 axios.interceptors.response.use(

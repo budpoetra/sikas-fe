@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 interface ReCaptchaProps {
-    siteKey: string;
+    siteKey: string | undefined;
     onVerify: (token: string) => void;
 }
 
