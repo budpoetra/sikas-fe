@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "../../compon
 import Button from "../../components/ui/button/Button";
 import { getProducts, deleteProduct, Product } from '../../services/productService';
 import useAlert from '../../hooks/useAlert';
+import BarcodeGenerator from '../../components/product/BarcodeGenerator';
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -126,6 +127,12 @@ export default function ProductList() {
                             >
                               Delete
                             </Button>
+                            <BarcodeGenerator
+                              barcodeValue={product.barcode || ''}
+                              // productName={product.productName}
+                              productCode={product.productCode}
+                              buttonText="Barcode"
+                            />
                           </div>
                         </TableCell>
                       </TableRow>
