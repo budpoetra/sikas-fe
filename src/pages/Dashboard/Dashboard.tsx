@@ -50,13 +50,13 @@ const Dashboard: React.FC = () => {
   // Prepare chart data from low stock items
   const prepareChartData = (): StockChartData[] => {
     if (!summary?.lowStockItems) return [];
-    
+
     // Take top 10 low stock items for chart
-    return summary.lowStockItems.slice(0, 10).map(item => ({
-      name: item.productName.length > 15 
-        ? item.productName.substring(0, 15) + '...' 
+    return summary.best10SellingProducts.slice(0, 10).map(item => ({
+      name: item.productName.length > 15
+        ? item.productName.substring(0, 15) + '...'
         : item.productName,
-      stock: item.stock,
+      stock: item.totalSold,
     }));
   };
 
@@ -103,7 +103,7 @@ const Dashboard: React.FC = () => {
         title="Dashboard | SIKAS"
         description="Dashboard overview for SIKAS inventory management"
       />
-      
+
       <div className="space-y-6">
         {/* Header */}
         <div className="mb-6">
@@ -111,7 +111,7 @@ const Dashboard: React.FC = () => {
             Dashboard Overview
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Welcome to SIKAS Inventory Management System
+            Welcome to SIKAS - your Cashier and Stock Information System.
           </p>
         </div>
 
@@ -138,7 +138,7 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Stock Chart */}
-        {summary && summary.lowStockItems.length > 0 && (
+        {summary && summary.lowStockItems.length >= 0 && (
           <div className="mt-6">
             <StockChart data={prepareChartData()} />
           </div>

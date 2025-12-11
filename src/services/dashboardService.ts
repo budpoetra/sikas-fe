@@ -8,10 +8,17 @@ export interface LowStockItem {
   category?: string;
 }
 
+export interface BestSellingProduct {
+  id: number;
+  productName: string;
+  totalSold: number;
+}
+
 export interface DashboardSummary {
   totalProducts: number;
   totalStock: number;
   todayTransactions: number;
+  best10SellingProducts: BestSellingProduct[];
   lowStockItems: LowStockItem[];
 }
 
