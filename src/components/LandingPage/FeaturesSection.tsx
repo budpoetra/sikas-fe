@@ -16,14 +16,15 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) =
 
 const FeaturesSection: React.FC = () => {
     return (
-        <section id="features" className="py-20 bg-gray-100 text-center px-40">
-            <div className="container mx-auto text-center">
-                <h2 className="text-4xl font-extrabold text-gray-800 mb-12">
-                    SIKAS Featured Features
-                </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <FeatureCard
-                        icon={<svg
+        <section id="features" className="py-20 bg-gray-100 text-center px-6 md:px-20 lg:px-40">
+
+            {/* Grid dibuat responsif dengan Tailwind */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                {/* CARD 1 */}
+                <FeatureCard
+                    icon={
+                        <svg
                             className="w-16 h-16 mx-auto mb-4"
                             viewBox="0 0 200 200"
                             xmlns="http://www.w3.org/2000/svg"
@@ -50,12 +51,16 @@ const FeaturesSection: React.FC = () => {
                                 <circle cx="140" cy="52" r="2" />
                                 <circle cx="148" cy="64" r="1.5" />
                             </g>
-                        </svg>}
-                        title="Fast & Easy Cashier"
-                        description="Process sales transactions quickly, support various payment methods, and print receipts automatically."
-                    />
-                    <FeatureCard
-                        icon={<svg
+                        </svg>
+                    }
+                    title="Fast & Easy Cashier"
+                    description="Process sales transactions quickly, support various payment methods, and print receipts automatically."
+                />
+
+                {/* CARD 2 */}
+                <FeatureCard
+                    icon={
+                        <svg
                             className="w-16 h-16 mx-auto mb-4"
                             viewBox="0 0 200 200"
                             xmlns="http://www.w3.org/2000/svg"
@@ -91,12 +96,15 @@ const FeaturesSection: React.FC = () => {
                                 <circle cx="150" cy="60" r="1.5" />
                             </g>
                         </svg>
-                        }
-                        title="Efficient Stock Management"
-                        description="Track stock in real-time, receive low stock notifications, and manage inventory accurately."
-                    />
-                    <FeatureCard
-                        icon={<svg
+                    }
+                    title="Efficient Stock Management"
+                    description="Track stock in real-time, receive low stock notifications, and manage inventory accurately."
+                />
+
+                {/* CARD 3 */}
+                <FeatureCard
+                    icon={
+                        <svg
                             className="w-16 h-16 mx-auto mb-4"
                             viewBox="0 0 200 200"
                             xmlns="http://www.w3.org/2000/svg"
@@ -138,12 +146,15 @@ const FeaturesSection: React.FC = () => {
                                 <circle cx="153" cy="62" r="1.5" />
                             </g>
                         </svg>
-                        }
-                        title="Comprehensive Sales Reports"
-                        description="Access daily, weekly, and monthly sales reports for better business performance analysis."
-                    />
-                    <FeatureCard
-                        icon={<svg
+                    }
+                    title="Comprehensive Sales Reports"
+                    description="Access daily, weekly, and monthly sales reports for better business performance analysis."
+                />
+
+                {/* CARD 4 */}
+                <FeatureCard
+                    icon={
+                        <svg
                             className="w-16 h-16 mx-auto mb-4"
                             viewBox="0 0 200 200"
                             xmlns="http://www.w3.org/2000/svg"
@@ -183,11 +194,11 @@ const FeaturesSection: React.FC = () => {
                                 <circle cx="156" cy="64" r="1.5" />
                             </g>
                         </svg>
-                        }
-                        title="Comprehensive Product Management"
-                        description="Add, edit, and organize your products easily, including prices, categories, and variants."
-                    />
-                </div>
+                    }
+                    title="Comprehensive Product Management"
+                    description="Add, edit, and organize your products easily, including prices, categories, and variants."
+                />
+
             </div>
         </section>
     );
